@@ -1,0 +1,19 @@
+@import 'calendarize.scss';
+
+.day {
+    &.today {
+        background-color: red;
+    }
+    &.holiday {
+        background-color: rgb(41, 214, 214);
+    }
+    &.birthday {
+        background-color: rgb(38, 208, 92);
+    }
+    &.busy {
+        background-color: rgb(147, 175, 44);
+    }
+    &.anniversary {
+        background-color: rgb(218, 72, 218);
+    }
+}
