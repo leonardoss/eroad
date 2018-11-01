@@ -1,25 +1,30 @@
-Based on https://github.com/bradtraversy/react_webpack_starter/tree/master/src
+# EROAD - JavaScript technical test
 
-https://www.youtube.com/watch?v=deyxI-6C2u4
+Application created to JavaScript technical test of EROAD. Created based on my own React-Boilerplate (https://github.com/leonardoss/react-boilerplate)
 
+##### Application created based on
+    - React 16 
+    - Webpack 4
+    - Babel
+    - SASS
+    - MaterialUI
+    - XXXXXXX
 
-React 16 and Webpack 4 starter pack
+## How to run
 
+##### Run local
+Node - 8.9.4
+```
+$ npm install
+```
 
-### Start
 ```
 $ npm start
 ```
 
-###  Build
+The application will be avaible on
 ```
-$ npm run build
-```
-
-###  Tests
-```
-$ npm test
+http://localhost:8000
 ```
 
-###  TO DO
-- jest
+Thanks for the opportunity :)

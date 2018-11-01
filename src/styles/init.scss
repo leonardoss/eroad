@@ -2,18 +2,18 @@
 
 .day {
     &.today {
-        background-color: red;
+        background-color: #e0e0e0;
     }
     &.holiday {
-        background-color: rgb(41, 214, 214);
+        background-color: #e53935;
     }
     &.birthday {
-        background-color: rgb(38, 208, 92);
+        background-color: #3949ab;
     }
     &.busy {
-        background-color: rgb(147, 175, 44);
+        background-color: #00897b;
     }
     &.anniversary {
-        background-color: rgb(218, 72, 218);
+        background-color: #f4511e;
     }
 }

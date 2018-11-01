@@ -1,26 +1,31 @@
 import React from 'react';
 import Layout from '../layouts';
 
-import Modal from 'simple-react-modal';
+import Calendar from '../components/Calendar';
+import CustomModal from '../components/Modal';
 
 class Dashboard extends React.Component {
   constructor() {
     super();
     this.calendarWrapper = '';
     this.calendarize = '';
+    this.currentYear = new Date().getFullYear();
+    this.classes = ['holiday', 'birthday', 'busy', 'anniversary'],
+    
     this.state = {
+      open: false,
       value: 'select',
       elem: '',
-      currentYear: new Date().getFullYear()
+      currentYearCalendar: this.currentYear
     }
   }
 
   showModal = () => {
-    this.setState({show: true})
+    this.setState({open: true})
   }
  
   closeModal = () => {
-    this.setState({show: false})
+    this.setState({open: false})
   }
 
   handlerClickDay = elem => {
@@ -29,30 +34,39 @@ class Dashboard extends React.Component {
   }
 
   changeColor = (className, elem) => {
-    const classes = ['holiday', 'birthday', 'busy', 'anniversary'];
     const classList = elem.classList;
 
     //remove classes
-    classes.map((item, index) => classList.contains(item) ? classList.remove(item) : '');
+    this.handleRemoveCategory(classList);
 
     //add new class
     classList.add(className);
   }
   
-  handleSelectChange = event => {
-    const className = event.target.value;
-
+  handleRemoveCategory = (classList) => {
+    this.classes.map((item) => classList.contains(item) ? classList.remove(item) : '');
+  }
+  
+  handleChangeCategory = event => {
+    const category = event.currentTarget.getAttribute('category');
+    
     this.setState({
-      value: event.target.value
+      value: category
     });
-    this.changeColor(className, this.state.elem);
+
+    if(category == 'remove'){
+      this.handleRemoveCategory(this.state.elem.classList);
+    } else {
+      this.changeColor(category, this.state.elem);
+    }
   }
   
   handleChangeYear = action => {
-    const year = action == 'prev' ? this.state.currentYear - 1 : this.state.currentYear + 1;
+    const _this = this;
+    const year = action == 'current' ? this.currentYear : (action == 'prev' ? this.state.currentYearCalendar - 1 : this.state.currentYearCalendar + 1);
 
     this.setState({
-      currentYear: year,
+      currentYearCalendar: year,
     });
 
     //clean calendarWrapper
@@ -60,6 +74,13 @@ class Dashboard extends React.Component {
 
     //render the new one with new year
     this.calendarize.buildYearCalendar(this.calendarWrapper, year);
+
+    const daysLink = document.querySelectorAll('.day');
+    Array.from(daysLink).forEach(elem => {
+      elem.addEventListener('click', (event) => {
+        _this.handlerClickDay(elem);
+      });
+    });
   }
 
   componentDidMount = () => {
@@ -67,8 +88,8 @@ class Dashboard extends React.Component {
     this.calendarWrapper = document.getElementById('calendar');
     this.calendarize = new Calendarize();
 
-    //create first calendar with currentYear
-    this.calendarize.buildYearCalendar(this.calendarWrapper, this.state.currentYear);
+    //create first calendar with currentYearCalendar
+    this.calendarize.buildYearCalendar(this.calendarWrapper, this.state.currentYearCalendar);
 
     //bind click event to day div's
     const daysLink = document.querySelectorAll('.day');
@@ -83,18 +104,15 @@ class Dashboard extends React.Component {
     return (
       <Layout>
         <div>
-          <div onClick={ () => this.handleChangeYear('prev') }>← PREV YEAR</div>
-          <div onClick={ () => this.handleChangeYear('next') }>NEXT YEAR →</div>
-          <div id="calendar"></div>
-          <Modal show={this.state.show} onClose={this.closeModal}>
-            <select id="selectTypeDay" onChange={ this.handleSelectChange } value={this.state.value}>
-              <option value="">Select</option>
-              <option value="holiday">Holiday</option>
-              <option value="birthday">Birthday</option>
-              <option value="busy">Busy</option>
-              <option value="anniversary">Anniversary</option>
-            </select>
-          </Modal>
+          <Calendar 
+            handleChangeYear={this.handleChangeYear}
+          />
+          <CustomModal 
+            open={this.state.open}
+            closeModal={this.closeModal}
+            handleChangeCategory={this.handleChangeCategory}
+            value={this.state.value}
+          />
         </div>
       </Layout>
     );
