@@ -22,7 +22,7 @@ const styles = theme => ({
 class Calendar extends React.Component {
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleChangeYear } = this.props;
     return (
       <div>
         <div className="calendar-header">
@@ -30,15 +30,15 @@ class Calendar extends React.Component {
             variant="contained" 
             color="primary" 
             className={classes.button}
-            onClick={ () => this.props.handleChangeYear('prev') }
+            onClick={ () => handleChangeYear('prev') }
           >
-            PREVIOUS YEAR <ArrowBack className={classes.leftIcon}>send</ArrowBack> 
+            <ArrowBack className={classes.leftIcon}>send</ArrowBack>  PREVIOUS YEAR
           </Button>
           <Button 
             variant="contained" 
             color="secondary" 
             className={classes.button}
-            onClick={ () => this.props.handleChangeYear('current') }
+            onClick={ () => handleChangeYear('current') }
           >
             CURRENT YEAR
           </Button>
@@ -46,13 +46,10 @@ class Calendar extends React.Component {
             variant="contained" 
             color="primary" 
             className={classes.button}
-            onClick={ () => this.props.handleChangeYear('next') }
+            onClick={ () => handleChangeYear('next') }
           >
             NEXT YEAR <ArrowForward className={classes.rightIcon}>send</ArrowForward>
           </Button>
-          
-          
-          
         </div>
         <div className="calendar-body">
           <div className="calendar" id="calendar"></div>
@@ -63,7 +60,8 @@ class Calendar extends React.Component {
 }
 
 Calendar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  handleChangeYear: PropTypes.func,
 };
 
 export default withStyles(styles)(Calendar);

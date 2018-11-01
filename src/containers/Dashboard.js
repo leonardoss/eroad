@@ -7,6 +7,7 @@ import CustomModal from '../components/Modal';
 class Dashboard extends React.Component {
   constructor() {
     super();
+    
     this.calendarWrapper = '';
     this.calendarize = '';
     this.currentYear = new Date().getFullYear();
@@ -36,10 +37,8 @@ class Dashboard extends React.Component {
   changeColor = (className, elem) => {
     const classList = elem.classList;
 
-    //remove classes
     this.handleRemoveCategory(classList);
 
-    //add new class
     classList.add(className);
   }
   

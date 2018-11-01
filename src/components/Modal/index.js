@@ -48,14 +48,14 @@ const styles = theme => ({
 class CustomModal extends Component {
   render() {
     
-    const { classes } = this.props;
+    const { classes, open, closeModal, handleChangeCategory } = this.props;
 
     return (
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={this.props.open}
-        onClose={this.props.closeModal}
+        open={open}
+        onClose={closeModal}
       >
         <div className={classes.modal}>
           <Typography variant="title" id="modal-title">
@@ -68,7 +68,7 @@ class CustomModal extends Component {
             <Button 
               variant="contained" 
               className={classNames(classes.button, classes.buttonHoliday)}
-              onClick={this.props.handleChangeCategory}
+              onClick={handleChangeCategory}
               category="holiday"
             >
               Holiday
@@ -76,7 +76,7 @@ class CustomModal extends Component {
             <Button 
               variant="contained" 
               className={classNames(classes.button, classes.buttonBirthday)}
-              onClick={this.props.handleChangeCategory}
+              onClick={handleChangeCategory}
               category="birthday"
             >
               Birthday
@@ -84,7 +84,7 @@ class CustomModal extends Component {
             <Button 
               variant="contained" 
               className={classNames(classes.button, classes.buttonBusy)}
-              onClick={this.props.handleChangeCategory}
+              onClick={handleChangeCategory}
               category="busy"
             >
               Busy
@@ -92,7 +92,7 @@ class CustomModal extends Component {
             <Button 
               variant="contained" 
               className={classNames(classes.button, classes.buttonAnniversary)}
-              onClick={this.props.handleChangeCategory}
+              onClick={handleChangeCategory}
               category="anniversary"
             >
               Anniversary
@@ -102,7 +102,7 @@ class CustomModal extends Component {
             <br />
             <Button 
               variant="contained"
-              onClick={this.props.handleChangeCategory}
+              onClick={handleChangeCategory}
               category="remove"
             >
               Remove category
@@ -115,7 +115,10 @@ class CustomModal extends Component {
 }
 
 CustomModal.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool,
+  closeModal: PropTypes.func,
+  handleChangeCategory: PropTypes.func,
 };
 
 export default withStyles(styles)(CustomModal);

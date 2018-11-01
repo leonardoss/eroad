@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "eroad",
   "version": "1.0.0",
-  "description": "boilerplate for react app",
+  "description": "eroad",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",

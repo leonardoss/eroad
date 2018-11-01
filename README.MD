@@ -8,7 +8,7 @@ Application created to JavaScript technical test of EROAD. Created based on my o
     - Babel
     - SASS
     - MaterialUI
-    - XXXXXXX
+    - Calendarize.JS
 
 ## How to run
 

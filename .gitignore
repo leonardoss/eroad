@@ -13,7 +13,6 @@ dist
 
 # misc
 coverage
-*.css
 .sass-cache
 .DS_Store
 .Trashes
