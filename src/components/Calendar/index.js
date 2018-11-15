@@ -52,7 +52,7 @@ class Calendar extends React.Component {
           </Button>
         </div>
         <div className="calendar-body">
-          <div className="calendar" id="calendar"></div>
+          <div className="calendar" id="calendar-wrapper"></div>
         </div>
       </div>
     );

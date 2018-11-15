@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
     super();
     
     this.calendarWrapper = '';
-    this.calendarize = '';
+    this.calendarize = new Calendarize();
     this.currentYear = new Date().getFullYear();
     this.classes = ['holiday', 'birthday', 'busy', 'anniversary'],
     
@@ -59,22 +59,32 @@ class Dashboard extends React.Component {
       this.changeColor(category, this.state.elem);
     }
   }
-  
+
   handleChangeYear = action => {
-    const _this = this;
     const year = action == 'current' ? this.currentYear : (action == 'prev' ? this.state.currentYearCalendar - 1 : this.state.currentYearCalendar + 1);
+    const eleCurrentYear = document.getElementById('wrapper-year-'+year);
+    const allEleYear = document.querySelectorAll('.wrapper-year');
 
     this.setState({
       currentYearCalendar: year,
     });
 
-    //clean calendarWrapper
-    this.calendarWrapper.innerHTML = "";
+    if ( eleCurrentYear == null ) {
+      this.createYear(year);
+    }
+    
+    allEleYear.forEach((ele) => {
+      ele.style.display = 'none';
+    });
 
-    //render the new one with new year
-    this.calendarize.buildYearCalendar(this.calendarWrapper, year);
+    document.getElementById('wrapper-year-'+year).style.display = 'block';
+  }
 
-    const daysLink = document.querySelectorAll('.day');
+  bindClickEvent = eleYear => {
+    const _this = this;
+
+    //bind click event to day div's
+    const daysLink = eleYear.querySelectorAll('.day');
     Array.from(daysLink).forEach(elem => {
       elem.addEventListener('click', (event) => {
         _this.handlerClickDay(elem);
@@ -82,21 +92,28 @@ class Dashboard extends React.Component {
     });
   }
 
+  createWrapperYear = (year, visible) => {
+    const eleYear = document.createElement('div');
+    
+    eleYear.setAttribute('id', 'wrapper-year-'+year);
+    eleYear.setAttribute('class', 'wrapper-year');
+    eleYear.style.display = visible ? 'block' : 'none';
+    this.calendarWrapper.appendChild(eleYear);
+
+    return eleYear;
+  }
+
+  createYear = (year, visible) => {
+    const eleYear = this.createWrapperYear(year, visible);
+
+    this.calendarize.buildYearCalendar(eleYear, year);
+    this.bindClickEvent(eleYear);
+  }
+
   componentDidMount = () => {
-    const _this = this;
-    this.calendarWrapper = document.getElementById('calendar');
-    this.calendarize = new Calendarize();
+    this.calendarWrapper = document.querySelector('#calendar-wrapper');
 
-    //create first calendar with currentYearCalendar
-    this.calendarize.buildYearCalendar(this.calendarWrapper, this.state.currentYearCalendar);
-
-    //bind click event to day div's
-    const daysLink = document.querySelectorAll('.day');
-    Array.from(daysLink).forEach(elem => {
-      elem.addEventListener('click', (event) => {
-        _this.handlerClickDay(elem);
-      });
-    });
+    this.createYear(this.state.currentYearCalendar, true);
   }
 
   render() {
